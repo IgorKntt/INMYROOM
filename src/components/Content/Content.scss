@@ -1,0 +1,44 @@
+.content {
+  padding: 16px;
+  color: white;
+
+  &__header{
+
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+
+    aside{
+      margin-left:16px;
+      font-size: 12px;
+    }
+  }
+
+  &__section{
+
+    h2 {
+      font-size: 20px;
+    }
+
+    p, blockquote {
+      font-size: 12px;
+      line-height: 125%;
+      letter-spacing: -2%;
+      vertical-align: middle;
+    }
+
+    blockquote {
+      background-color: rgba(211,211,211,0.6);
+      font-style: italic;
+      padding: 12px;
+      margin-right: 0;
+
+    }
+  }
+
+
+
+}
