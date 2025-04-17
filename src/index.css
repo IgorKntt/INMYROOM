@@ -85,7 +85,3 @@ textarea:not([rows]) {
   font-style: normal;
 }
 
-body {
-  max-width: 480px;
-  margin: 0 auto;
-}
