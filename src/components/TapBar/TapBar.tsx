@@ -1,78 +1,18 @@
-import { useEffect, useState } from "react";
-import "./TapBar.scss";
+import { useState } from "react";
+import { useHiddenRef } from "@/hooks/useHiddenRef";
+import { shareLink } from "@/api/shareLink";
 
 import shareIcon from "@/assets/icons/icon_share.svg";
 import pageUpIcon from "@/assets/icons/icon_pageup.svg";
 import heartIcon from "@/assets/icons/icon_heart.svg";
 import commentsIcon from "@/assets/icons/icon_comments.svg";
+import "./TapBar.scss";
 
 export const TapBar = () => {
 
-  const [isHidden, setIsHidden] = useState<boolean>(false);
+  const tapBarRef = useHiddenRef<HTMLDivElement>("tapBar_hidden");
   const [commentsCount, setCommentsCount] = useState<number>(0);
   const [favoritesCount, setFavoritesCount] = useState<number>(0);
-
-  useEffect(()=>{
-    let prevScroll: number = 0;
-    let isThrottled: boolean = false;
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const handleScroll = () => {
-      if (isThrottled) {
-        return;
-      }
-
-      isThrottled = true;
-
-      const currentScroll = window.pageYOffset;
-      const currentOffset = currentScroll - prevScroll;
-
-      if (currentOffset > 200) {
-        setIsHidden(true);
-      } else if (currentOffset < 0)  {
-        setIsHidden(false);
-      }
-
-      prevScroll = window.pageYOffset;
-      setTimeout(()=> {
-        isThrottled = false;
-      }, 250);
-
-      clearTimeout(timeout);
-      timeout = setTimeout(()=> {
-         prevScroll = window.pageYOffset;
-         setIsHidden(false);
-      }, 1000);
-
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    }
-  },[]);
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-          title: document.title,
-          url: window.location.href
-      })
-          .then(() => console.log('Shared successfully'))
-          .catch((error) => console.error('Error sharing:', error));
-  } else {
-      const el = document.createElement('textarea');
-      el.value = window.location.href;
-      document.body.appendChild(el);
-      el.select();
-      if (document.execCommand('copy')) {
-        console.log('Link copied to clipboard:', window.location.href);
-      } else {
-        console.log('Failed copy link to clipboard');
-      }
-      document.body.removeChild(el);
-    }
-  };
 
 
   const handlePageUp = () => {
@@ -81,8 +21,8 @@ export const TapBar = () => {
 
 
   return (
-    <div className = {`tapBar ${isHidden ? "tapBar_hidden" : "" }`} >
-      <button onClick={handleShare}>
+    <div className="tapBar"ref={tapBarRef}>
+      <button onClick={shareLink}>
         <img src={shareIcon} alt="share icon" />
       </button>
       <button onClick={handlePageUp}>

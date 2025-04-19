@@ -1,12 +1,20 @@
-.main {
-  min-height: 100vh;
-  background-image: url("inmyroom_background.png");
-  background-size: 350vw;
-  background-position-x: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-color: rgb(34,33,38);
+body {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
 
+  &::before{
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 110vh;
+    z-index: -1;
+    background-image: url("inmyroom_background.png");
+    background-size: cover;
+    background-position: center;
+    transition: height 999999s;
+  }
 }
-
 
